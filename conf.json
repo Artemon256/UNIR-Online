@@ -1,0 +1,18 @@
+{
+  "comment": "This is an example of conf.json",
+
+  "site_tls": false,
+  "site_cert": "",
+  "site_key": "",
+
+  "uid": 1000,
+  "gid": 1000,
+
+  "imgur_clientID": "PRIVATE DATA",
+  "imgur_clientSecret": "PRIVATE DATA",
+  "imgur_mashapeKey": "PRIVATE DATA",
+
+  "smtp_username": "PRIVATE DATA",
+  "smtp_password": "PRIVATE DATA",
+  "smtp_server": "PRIVATE DATA"
+}
