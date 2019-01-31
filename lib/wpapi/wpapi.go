@@ -71,6 +71,33 @@ func (c *Client) EditPost(post Post) (bool, error) {
   return ok, err
 }
 
+func (c *Client) GetAllPostIDs() ([]string, error) {
+  reqBytes, err := xmlrpc.EncodeMethodCall("wp.getPosts", c.BlogID, c.Username, c.Password, struct{}{}, []string{"post_id"})
+
+  if err != nil {
+    return []string{}, err
+  }
+
+  bytesResp, err := doHTTPPost(c.APIURL, "text/xml", reqBytes)
+
+  var wpResp []Post
+
+  xmlrpcResp := xmlrpc.NewResponse(bytesResp)
+  err = xmlrpcResp.Unmarshal(&wpResp)
+
+  if err != nil {
+    return []string{}, err
+  }
+
+  var result []string
+
+  for _, p := range wpResp {
+    result = append(result, p.ID)
+  }
+
+  return result, nil
+}
+
 func (c *Client) GetUsersBlog() (string, error) {
   reqBytes, err := xmlrpc.EncodeMethodCall("wp.getUsersBlogs", c.Username, c.Password)
   if err != nil {

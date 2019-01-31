@@ -1,0 +1,38 @@
+Started executing task for 
+
+Started reuploading for post 20
+
+20 : done
+
+Started reuploading for post 16
+
+16 : done
+
+Started reuploading for post 1
+
+Skipped https://i.imgur.com/FDiPmJB.jpg due to rules
+Skipped https://i.imgur.com/OsfviOX.jpg due to rules
+Skipped https://i.imgur.com/TSWXUfW.jpg due to rules
+Skipped https://i.imgur.com/yAxxDsP.jpg due to rules
+Skipped https://i.imgur.com/2TPOuHA.jpg due to rules
+Skipped https://i.imgur.com/FO8TMz4.jpg due to rules
+Skipped https://i.imgur.com/J0JsxnM.jpg due to rules
+Skipped https://i.imgur.com/O0Y6YAz.jpg due to rules
+Skipped https://i.imgur.com/6h6XTH1.jpg due to rules
+Skipped https://i.imgur.com/PbbWvP9.jpg due to rules
+Skipped https://i.imgur.com/4cv50Iw.jpg due to rules
+Skipped https://i.imgur.com/CTjMG1k.jpg due to rules
+Skipped https://i.imgur.com/zra94uF.jpg due to rules
+Skipped https://i.imgur.com/Up3221Q.jpg due to rules
+Skipped https://i.imgur.com/CMPu5CJ.jpg due to rules
+Skipped https://i.imgur.com/TpKauS1.jpg due to rules
+Skipped https://i.imgur.com/o4nov3Q.jpg due to rules
+Skipped http://lh4.ggpht.com/-nlLNv81ltYE/U6LTJYvU1sI/AAAAAAAAIQ0/E1qzSiy4SpA/s0/f132bn0ouwjx.jpg due to rules
+Skipped https://i.imgur.com/eoZTBhh.jpg due to rules
+Skipped https://i.imgur.com/fAKGYZL.jpg due to rules
+Skipped https://i.imgur.com/8MIMDc7.jpg due to rules
+Skipped https://i.imgur.com/GAEh39h.jpg due to rules
+Skipped https://i.imgur.com/C98o7wH.jpg due to rules
+Skipped https://i.imgur.com/d9dhl25.jpg due to rules
+1 : done
+

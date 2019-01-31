@@ -217,21 +217,36 @@ func registerReuploadQueryWP(response http.ResponseWriter, request *http.Request
 	user := request.Form.Get("user")
 	password := request.Form.Get("password")
 	address := request.Form.Get("site")
-	email := request.Form.Get("email")
-
-	links := strings.Split(request.Form.Get("links"), "\r\n")
-	rules := strings.Split(request.Form.Get("rules"), "\r\n")
-
-	if ((user == "") || (password == "") || (email == "") || (address == "") || (len(links) == 0) || (len(rules) == 0)) {
-		loadPage(response, "pages/400.html")
-		return
-	}
 
 	err, wp := newWP(user, password, address)
 
 	if (err != nil) {
 		log.Print(err)
 		loadPage(response, "pages/403.html")
+		return
+	}
+
+	email := request.Form.Get("email")
+
+	rawLinks := request.Form.Get("links");
+
+	var links []string
+
+	if strings.Contains(rawLinks, "*") {
+		links, err = wp.GetAllPostIDs()
+		if err != nil {
+			log.Print(err)
+			loadPage(response, "pages/500.html")
+			return
+		}
+	} else {
+		links = strings.Split(rawLinks, "\r\n")
+	}
+
+	rules := strings.Split(request.Form.Get("rules"), "\r\n")
+
+	if ((user == "") || (password == "") || (email == "") || (address == "") || (len(links) == 0) || (len(rules) == 0)) {
+		loadPage(response, "pages/400.html")
 		return
 	}
 
