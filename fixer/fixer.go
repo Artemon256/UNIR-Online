@@ -16,6 +16,12 @@ type image struct {
 	Size int
 }
 
+type Fix struct {
+	Name	string	`json:"name"`
+	From	string	`json:"from"`
+	To		string	`json:"to"`
+}
+
 func (i *image) GetImageInfo() error {
 	u, err := url.Parse(i.URL)
 	if (err != nil) {
@@ -80,10 +86,19 @@ func (i *image) CheckImage(rules []string) bool {
 	return true
 }
 
-func ProcessPost(postText string, rules []string, imgur imgurapi.Client, reporter logger.Reporter) string {
+func ProcessPost(postText string, rules []string, imgur imgurapi.Client,
+	reporter logger.Reporter, fixes []Fix) string {
+
   var tokens = [...]string {"<", "img", "src", "=", "\"", "\""}
   var tokenNum, urlBegin, urlEnd int = 0, 0, 0
   var resultText string = postText
+
+	for _, f := range fixes {
+		if strings.Contains(resultText, f.From) {
+			resultText = strings.Replace(resultText, f.From, f.To, -1)
+			reporter.Log("Performed a(n) " + f.Name)
+		}
+	}
 
   for i := 0; i < len(postText); i++ {
     if postText[i] == '>' {

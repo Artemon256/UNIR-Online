@@ -111,7 +111,10 @@ func (lj *Client) EditPost(post Post) error {
 	contentReader := bytes.NewReader([]byte(content))
 
 	resp, err := http.Post(URL, TYPE, contentReader)
-	defer resp.Body.Close()
+
+	if err != nil {
+		return err
+	}
 
 	if resp.StatusCode != 200 {
 		buf, _ := ioutil.ReadAll(resp.Body)
@@ -119,7 +122,9 @@ func (lj *Client) EditPost(post Post) error {
 		return errors.New(resp.Status)
 	}
 
-	return err
+	defer resp.Body.Close()
+
+	return nil
 }
 
 func (lj *Client) GetPost(post_url string) (Post, error) {

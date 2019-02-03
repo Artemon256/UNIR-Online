@@ -21,7 +21,7 @@ func tarReport() error {
 	return err
 }
 
-func (settings *SMTPSettings) SendReport(address, name string) error {
+func (settings *SMTPSettings) SendReport(address, name, id string) error {
 	const PATTERN = `Уважаемый %s,
 Спасибо за использование UNIR Online. Ваша заявка была обработана в той или иной степени, и разработчик выражает искреннюю надежду, что в той, а не иной.
 Даже если UNIR умудрился вам что-то попортить, он  ̶п̶о̶п̶р̶о̶с̶и̶т̶ ̶п̶р̶о̶щ̶е̶н̶и̶я̶ делал резервные копии постов, так что восстановить их не составит труда. Конечно, если внезапно копии не окажутся битыми, хехехе.
@@ -36,7 +36,7 @@ func SendReport(address, name string)`
 	if err != nil {
 		return err
 	}
-	defer os.Remove("report.tar.gz")
+	defer os.Rename("report.tar.gz", "done/" + name + "-" + id)
 
 	text := fmt.Sprintf(PATTERN, name)
 

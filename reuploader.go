@@ -31,6 +31,8 @@ var mail sender.SMTPSettings = sender.SMTPSettings {
 	SmtpServer: "",
 }
 
+var fixes []fixer.Fix
+
 type task struct {
 	LJ ljapi.Client	`json:"lj_client"`
 	WP wpapi.Client	`json:"wp_client"`
@@ -65,6 +67,15 @@ func loadConfig(filename string) bool {
 		log.Print(err)
 		return false
 	}
+
+	fixSet := struct{
+		Fixes	[]fixer.Fix	`json:"additional_fixes"`
+	}{}
+
+	json.Unmarshal(content, &fixSet)
+
+	fixes = fixSet.Fixes
+
 	if (imgur.ClientID == "") || (imgur.ClientSecret == "") || (imgur.MashapeKey == "") {
 		log.Print("Invalid config file.")
 		return false
@@ -185,17 +196,22 @@ func executeTaskLJ(subject task) {
 			log.Print(err)
 			continue
 		}
-		post.Content = fixer.ProcessPost(post.Content, subject.Rules, imgur, mainReport)
+		newContent := fixer.ProcessPost(post.Content, subject.Rules, imgur, mainReport, fixes)
 		if err != nil {
 			mainReport.Log(fmt.Sprintf("Failed to process post %s\n", link))
 			log.Print(err)
 			continue
 		}
-		err = subject.LJ.EditPost(post)
-		if err == nil {
-			mainReport.Log(fmt.Sprintf("%s : done\n", link))
+		if newContent != post.Content {
+			post.Content = newContent
+			err := subject.LJ.EditPost(post)
+			if err == nil {
+				mainReport.Log(fmt.Sprintf("%s : done\n", link))
+			} else {
+				mainReport.Log(fmt.Sprintf("%s : error : %s\n", link, err))
+			}
 		} else {
-			mainReport.Log(fmt.Sprintf("%s : error : %s\n", link, err))
+			mainReport.Log(fmt.Sprintf("%s : done\n", link))
 		}
 	}
 }
@@ -215,17 +231,22 @@ func executeTaskWP(subject task) {
 			log.Print(err)
 			continue
 		}
-		post.Content = fixer.ProcessPost(post.Content, subject.Rules, imgur, mainReport)
+		newContent := fixer.ProcessPost(post.Content, subject.Rules, imgur, mainReport, fixes)
 		if err != nil {
 			mainReport.Log(fmt.Sprintf("Failed to process post %s\n", id))
 			log.Print(err)
 			continue
 		}
-		ok, err := subject.WP.EditPost(post)
-		if (err == nil) || (!ok) {
-			mainReport.Log(fmt.Sprintf("%s : done\n", id))
+		if newContent != post.Content {
+			post.Content = newContent
+			ok, err := subject.WP.EditPost(post)
+			if (err == nil) || (!ok) {
+				mainReport.Log(fmt.Sprintf("%s : done\n", id))
+			} else {
+				mainReport.Log(fmt.Sprintf("%s : error : %s\n", id, err))
+			}
 		} else {
-			mainReport.Log(fmt.Sprintf("%s : error : %s\n", id, err))
+			mainReport.Log(fmt.Sprintf("%s : done\n", id))
 		}
 	}
 }
@@ -246,7 +267,15 @@ func executeTask(subject task) {
 
 	mainReport.Finish()
 	if !imgur.Locked {
-		err := mail.SendReport(subject.Email, subject.LJ.User)
+
+		var name string
+		if subject.Mode == "lj" {
+			name = subject.LJ.User
+		} else if subject.Mode == "wp" {
+			name = subject.WP.Username
+		}
+
+		err := mail.SendReport(subject.Email, name, subject.Filename)
 		if err != nil {
 			log.Print(err)
 		} else {
@@ -262,6 +291,7 @@ func main() {
 	if !loadConfig("conf.json") {
 		return
 	}
+	log.Print("Loaded fixes:", fixes)
 	initReportDir()
 	var check_id int = -1
 	for true {
