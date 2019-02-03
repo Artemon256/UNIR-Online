@@ -36,7 +36,6 @@ func SendReport(address, name string)`
 	if err != nil {
 		return err
 	}
-	defer os.Rename("report.tar.gz", "done/" + name + "-" + id)
 
 	text := fmt.Sprintf(PATTERN, name)
 
@@ -55,5 +54,8 @@ func SendReport(address, name string)`
 		return err
 	}
 	err = email.Send(settings.SmtpServer + ":25", auth, msg)
-	return err
+	if err != nil {
+		return err
+	}
+	return os.Rename("report.tar.gz", "done/" + name + "-" + id + ".tar.gz")
 }
