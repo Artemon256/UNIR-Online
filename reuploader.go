@@ -275,7 +275,7 @@ func executeTask(subject task) {
 			name = subject.WP.Username
 		}
 
-		err := mail.SendReport(subject.Email, name, subject.Filename)
+		err := mail.SendReport(subject.Email, name, path.Base(subject.Filename))
 		if err != nil {
 			log.Print(err)
 		} else {
