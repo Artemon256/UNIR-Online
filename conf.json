@@ -14,5 +14,7 @@
 
   "smtp_username": "PRIVATE DATA",
   "smtp_password": "PRIVATE DATA",
-  "smtp_server": "PRIVATE DATA"
+  "smtp_server": "PRIVATE DATA",
+  
+  "additional_fixes": []
 }
