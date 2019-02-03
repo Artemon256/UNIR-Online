@@ -1,0 +1,80 @@
+<html>
+	<head>
+		<title>UNIR Online</title>
+		<link rel="stylesheet" href="style.css">
+		<script>
+			function toggleButton() {
+				let start = document.getElementById("start");
+				start.disabled = !start.disabled;
+			}
+			function toggleVisibility() {
+				let field = document.getElementById("password");
+				if (field.type == "password")
+					field.type = "text";
+				else
+					field.type = "password";
+			}
+			function updateEmail() {
+				document.getElementById("mail").innerHTML = document.getElementById("mail_input").value;
+			}
+		</script>
+	</head>
+	<body>
+		<p class="frame">
+			<h1>UNIR Online</h1>
+			<br><br>
+			<form action = "/reupload_wp" method = "POST">
+			<h2>Укажите ваш e-mail, на который мы будем присылать результаты</h2>
+			<br>
+			<input required type = "text" name = "email" id="mail_input" onfocusout="updateEmail()" size = 20>
+			<br><br>
+			<h2>Авторизация WordPress</h2>
+			<br><br>
+      <h2>Адрес сайта:</h2>
+      <br>
+      Укажите адрес вместе с протоколом (например, <b>https://</b>example.com/). Лучше просто скопируйте его из адресной строки браузера.
+      <br><br>
+      <input required type = "text" name = "site" size = 20>
+      <br><br>
+			<h2>Логин:</h2>
+			<br>
+			<input required type = "text" name = "user" size = 20>
+			<br><br>
+			<h2>Пароль:</h2>
+			<br>
+			<input required type = "password" name = "password" id = "password" size = 20>
+			<br><br>
+			<input type = "checkbox" onclick = "toggleVisibility()" id="passvisible">Видимый пароль
+			<br><br><br>
+			Пришло время магии перезалива. В левое поле суйте <a href="wtf.html" target="_blank">ID обрабатываемых постов</a>, разделяя их переносами строки. В правое поле суйте <a href="rules.html" target="_blank">правила обработки</a> картинок.
+			<br><br>
+			<textarea class = "code" required type = "comment" name = "links" cols = 50 rows = 10></textarea>
+			<textarea class = "code" required type = "comment" name = "rules" cols = 50 rows = 10>
+INCLUDE flickr
+MORETHAN 4096
+</textarea>
+			<br><br>
+			Волнуетесь? Я тоже. Эта фигня не оттестирована, я не гарантирую, что она не удалит ваш блог КЕМ.
+			<br>
+			Но на всякий случай, она будет делать бэкап каждого указанного поста, который будет отправлен вам на <b><div id="mail"></div></b>
+			<br><br>
+			Убедитесь в правильности адреса электронной почты.
+			<br><br>
+			РАЗРАБОТЧИК НИКАКОЙ ОТВЕТСТВЕННОСТИ ЗА СОХРАННОСТЬ ВАШЕГО БЛОГА <b>НЕ НЕСЁТ</b>
+			<br><br>
+			<input type = "checkbox" onclick="toggleButton()" id="agreement">Я согласен со всем вышеперечисленным.
+			<br><br>
+			<input type = "submit" value="Поехали" id="start">
+		</form>
+		</p>
+		<p class = "footer">
+			Разработчик - бедный <strike>студент</strike> школьник, ему нужны деньги на ардуинки и прочие электронные модули. Если не жалко - прошу кинуть донат на карту monobank - 5375414105767932
+		</p>
+		<script>
+			document.getElementById("password").type="password"
+			document.getElementById("passvisible").checked = false;
+			document.getElementById("start").disabled = true;
+			document.getElementById("agreement").checked = false;
+		</script>
+	</body>
+</html>

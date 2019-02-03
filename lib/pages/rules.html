@@ -1,0 +1,46 @@
+﻿<html>
+	<head>
+		<title>UNIR Online</title>
+		<link rel="stylesheet" href="style.css">
+	</head>
+	<body>
+		<p class = "frame">
+			<h1>UNIR Online</h1>
+			<br><br>
+			<h3>Итак, правила указания правил обработки. Что.</h3>
+			<br><br>
+			У каждого изображения есть домен хостинга, на котором оно располагается. Именно по доменам в основном и будет происходить отбор.
+			<br>
+			Все директивы доменов проверяют указанные строки <b>на вхождение</b> в домен фото. Т.е. <span class = "code">INCLUDE abc</span> добавит <b>все домены</b> содержащие подстроку <span class = "code">abc</span>.
+			<br><br>
+			Для добавления домена в список обрабатываемых укажите перед ним директиву <span class = "code">INCLUDE</span>. Например,
+			<br><br>
+			<span class = "code">INCLUDE example.com</span>
+			<br><br>
+			добавит <span class = "code">example.com</span> в список доменов.
+			<br><br>
+			Для исключения домена из списка обрабатываемых укажите перед ним директиву <span class = "code">EXCLUDE</span>. Например,
+			<br><br>
+			<span class = "code">EXCLUDE example.com</span>
+			<br><br>
+			исключит <span class = "code">example.com</span> из списка доменов.
+			<br><br>
+			Для указания всех доменов используется символ <span class = "code">*</span> (звёздочка). Например:
+			<br><br>
+			<span class = "code">INCLUDE *</span>
+			<br><br>
+			добавит все домены в список обрабатываемых.
+			<br><br>
+			Для ограничения размера картинок в байтах используются директивы <span class = "code">LESSTHAN</span> и <span class = "code">MORETHAN</span>. Например,
+			<br><br>
+			<span class = "code">MORETHAN 4096</span>
+			<br>
+			<span class = "code">LESSTHAN 1048576</span>
+			<br><br>
+			укажет игнорирование картинок размером больше одного мегабайта и меньше четырёх килобайт.
+		</p>
+		<p class = "footer">
+			Разработчик - бедный <strike>студент</strike> школьник, ему нужны деньги на ардуинки и прочие электронные модули. Если не жалко - прошу кинуть донат на карту monobank - 5375414105767932
+		</p>
+	</body>
+</html>

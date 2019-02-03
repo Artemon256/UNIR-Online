@@ -1,0 +1,41 @@
+﻿* {
+	font-family: arial;
+	text-align: center;
+}
+body {
+	background-color: #F2ECDE;
+}
+p.frame {
+	margin-top: 0;
+}
+h1 {
+	margin: 0;
+}
+h2 {
+	margin: 0;
+}
+h3 {
+	margin: 0;
+}
+input {
+	font-size: 32;
+}
+button {
+	font-size: 32;
+	width: 256;
+}
+textarea {
+	font-size: 16;
+}
+p.footer {
+	position: relative;
+	text-align: center;
+	bottom: -80;
+	font-size: 8;
+}
+.code {
+	text-align: left;
+	font-family: monospace;
+	font-size: 16;
+	background-color: white;
+}
